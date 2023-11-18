@@ -9,7 +9,7 @@ import { ReactComponent as WalletConnectIcon } from "../../ui-kit/images/walletc
 import { StateContext } from "../../reducer/constants";
 
 import "./App.scss";
-import {Routes} from "../Routes";
+import { Routes } from "../Routes";
 
 const App = () => {
     const { uiSelectedChainId } = useContext(StateContext);

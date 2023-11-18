@@ -9,8 +9,8 @@
     &__container {
         width: 100%;
         min-height: calc(100vh - 280px);
-        color: #FFFFFF;
-        margin-bottom: 56px;
+        color: $black;
+        margin-bottom: 75px;
 
         display: flex;
         flex-direction: column;

@@ -2,7 +2,6 @@ import React from "react";
 import { ActionType, ReducerState } from "./index";
 
 export const initialState: ReducerState = {
-    newCustomToken: undefined,
     uiSelectedChainId: 1,
 };
 

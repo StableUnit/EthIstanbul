@@ -9,9 +9,9 @@ $border: 1px;
   -webkit-text-fill-color: transparent;
 
   &--disabled {
-    -webkit-text-fill-color: white;
+    -webkit-text-fill-color: $black;
     background: none;
-    color: white;
+    color: $black;
     pointer-events: none;
   }
 

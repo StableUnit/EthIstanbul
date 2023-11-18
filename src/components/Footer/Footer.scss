@@ -7,16 +7,10 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: $gray2;
+  color: $black;
 
   &__made-by {
     text-align: center;
-  }
-
-  &__version {
-    text-align: center;
-    color: $gray1;
-    font-size: 12px;
   }
 
   &__social {
@@ -30,7 +24,7 @@
   }
 
   a {
-    color: white;
+    color: $black;
     text-decoration: none !important;
   }
 }

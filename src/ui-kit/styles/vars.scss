@@ -2,6 +2,7 @@ $gray1: #7A7A7A;
 $gray2: #CFCFCF;
 $gray3: #ECECEC;
 $gray4: #BDBDBD;
+$white: #F5F5F5;
 
 $black: #20201D;
 $dark: #383838;
@@ -17,7 +18,7 @@ $max-width: 400px;
 
 $header-height: 79px;
 
-$gradient: linear-gradient(74.43deg, #DBB0FF -12.43%, #C2DCFF 24.51%, #B4FFE0 63.46%, #FEFBDA 82.01%, #FECBFF 110.47%);
+$gradient: linear-gradient(0deg, rgba(0,198,200,1) 0%, rgba(5,176,0,1) 100%);
 $gradient-fallback: #C2DCFF;
 
 $mobile-width: 670px;

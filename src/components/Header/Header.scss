@@ -7,14 +7,14 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 70px;
+    height: 60px;
     padding: 0 40px;
     z-index: 10;
     top: 0;
     left: 0;
 
-    background: $black;
-    box-shadow: 0 6px 12px 6px rgba(32,32,29,1);
+    background: $gray3;
+    box-shadow: 0 6px 12px 6px $gray3;
 
     @media screen and (max-width: 600px) {
         height: 68px;
@@ -38,7 +38,7 @@
         font-weight: 700;
         font-size: 12px;
         line-height: 16px;
-        color: white;
+        color: $black;
 
         display: flex;
         justify-content: center;

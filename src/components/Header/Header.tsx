@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 import cn from "classnames";
 
@@ -6,8 +6,7 @@ import { useAccount } from "wagmi";
 import { getShortAddress } from "../../utils/wallet";
 import { GradientHref } from "../../ui-kit/components/GradientHref";
 import { useDevice } from "../../hooks/useDimensions";
-import { BurgerIcon } from "../../ui-kit/images/icons";
-import { LinkType, MenuModal } from "./supportComponents/MenuModal";
+import { LinkType } from "./supportComponents/MenuModal";
 import { HeaderInfo } from "./supportComponents/HeaderInfo";
 
 import "./Header.scss";
@@ -19,33 +18,19 @@ interface NavbarProps {
 
 const LINKS = [
     {
-        href: "/intro",
-        text: "Intro",
+        href: "/borrow",
+        text: "Borrow",
     },
     {
-        href: "/request",
-        text: "Request",
-    },
-    {
-        href: "/send",
-        text: "Send",
+        href: "/pools",
+        text: "Pools",
     },
 ] as LinkType[];
 
 const Header = ({ onConnect, onDisconnect }: NavbarProps) => {
     const { address } = useAccount();
-    const [isMenuModalVisible, setIsMenuModalVisible] = useState(false);
     const { isMobile } = useDevice();
     const location = useLocation();
-
-    const openMenuModal = () => {
-        setIsMenuModalVisible(true);
-    };
-    const closeMenuModal = () => {
-        setIsMenuModalVisible(false);
-    };
-
-    const revokeUrl = address ? `https://revoke.cash/address/${address}` : "https://revoke.cash/";
 
     return (
         <div className="header">
@@ -70,15 +55,6 @@ const Header = ({ onConnect, onDisconnect }: NavbarProps) => {
                                 </GradientHref>
                             );
                         })}
-                        <GradientHref
-                            id="links-revoke"
-                            className="header__link"
-                            href={revokeUrl}
-                            isExternal
-                            target="_blank"
-                        >
-                            Revoke
-                        </GradientHref>
                     </div>
                 )}
                 {address ? (
@@ -91,9 +67,7 @@ const Header = ({ onConnect, onDisconnect }: NavbarProps) => {
                         Connect wallet
                     </div>
                 )}
-                {isMobile && <BurgerIcon className="header__menu" onClick={openMenuModal} />}
             </div>
-            <MenuModal visible={isMenuModalVisible} onClose={closeMenuModal} links={LINKS} />
         </div>
     );
 };

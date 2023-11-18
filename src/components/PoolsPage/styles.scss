@@ -1,0 +1,36 @@
+@import "../../ui-kit/styles/vars";
+
+.pool {
+  margin: 0 120px;
+  position: relative;
+
+  &__image {
+    width: 100%;
+  }
+
+  &__earn-button {
+    position: absolute !important;
+    top: 200px;
+    right: 25px;
+  }
+
+  &__table {
+    width: 100%;
+    margin: 80px auto 0 auto;
+    max-width: 1000px;
+
+    &__line {
+      display: flex;
+      padding-bottom: 40px;
+
+      &__section {
+        flex: 1;
+      }
+
+      &__title {
+        color: #7889B4;
+        padding-bottom: 4px;
+      }
+    }
+  }
+}

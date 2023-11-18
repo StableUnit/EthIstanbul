@@ -22,12 +22,7 @@ import "react-notifications-component/dist/theme.css";
 const AppContainer = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const chains = [
-        mainnet,
-        goerli,
-        polygon,
-        wagmiCustomNetworks.celo
-    ];
+    const chains = [mainnet, goerli, polygon, wagmiCustomNetworks.celo];
 
     const { provider, webSocketProvider } = configureChains(chains, [
         infuraProvider({ apiKey: process.env.REACT_APP_INFURA_KEY ?? "" }),
@@ -43,7 +38,7 @@ const AppContainer = () => {
                 options: {
                     qrcode: true,
                 },
-            })
+            }),
         ],
         provider,
         webSocketProvider,
