@@ -30,7 +30,7 @@
     left: 50%;
     z-index: 2;
     will-change: opacity;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.3);
     opacity: 1;
     pointer-events: auto;
     display: flex;
@@ -43,7 +43,7 @@
         flex-direction: column !important;
         padding: 32px 40px !important;
 
-        background-color: rgb(49, 49, 49);
+        background-color: $gray1;
         border-radius: 12px;
         margin: 10px;
         box-sizing: border-box;
@@ -72,7 +72,8 @@
         }
         &-container {
             padding: 10px 16px !important;
-            background: $black !important;
+            background: $dark2 !important;
+            color: $white !important;
             border-radius: 8px !important;
             display: flex !important;
             flex-direction: row !important;
