@@ -1,14 +1,13 @@
 import React, { ChangeEvent, useState } from "react";
-import { BigNumber } from "ethers";
 
 import { FormControl, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 
 import EthImage from "../../../../ui-kit/images/eth.png";
 import Button from "../../../../ui-kit/components/Button/Button";
 import { ReactComponent as ArrowDownIcon } from "../../../../ui-kit/images/arrow-down.svg";
-import { beautifyTokenBalance } from "../../../../utils/tokens";
 
 import "./styles.scss";
+import { addSuccessNotification } from "../../../../utils/notifications";
 
 export const BorrowSection = () => {
     const liqPriceUSD = 0.009;
@@ -42,6 +41,10 @@ export const BorrowSection = () => {
     };
     const handleTokenChange = (event: SelectChangeEvent) => {
         setSelectedToken(event.target.value);
+    };
+
+    const handleBorrow = () => {
+        addSuccessNotification("Borrow success");
     };
 
     return (
@@ -137,10 +140,10 @@ export const BorrowSection = () => {
                     </div>
                 </div>
             </div>
-            <div className="borrow__liquidation">
+            <div className="borrow-section__liquidation">
                 Liquidation price: ${liqPriceUSD} ({liqPriceETH} ETH)
             </div>
-            <Button text="Borrow" padding="1px" />
+            <Button onClick={handleBorrow} text="Borrow" padding="1px" />
         </div>
     );
 };

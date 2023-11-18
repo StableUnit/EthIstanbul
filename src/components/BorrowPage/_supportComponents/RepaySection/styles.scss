@@ -1,5 +1,27 @@
 @import "../../../../ui-kit/styles/vars";
 
 .repay-section {
+  &__data {
+    background: $gray3;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
 
+    display: flex;
+    justify-content: space-between;
+
+    &__info {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+    }
+
+    &__name {
+      margin-left: 6px;
+    }
+
+    &__amount {
+      color: #7B7B7B;
+    }
+  }
 }
