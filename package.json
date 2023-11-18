@@ -37,7 +37,7 @@
     },
     "scripts": {
         "start": "TSC_COMPILE_ON_ERROR=true REACT_APP_VERSION=$npm_package_version react-scripts --openssl-legacy-provider start",
-        "build": "HTTPS=true TSC_COMPILE_ON_ERROR=true REACT_APP_VERSION=$npm_package_version react-app-rewired build",
+        "build": "HTTPS=true TSC_COMPILE_ON_ERROR=true REACT_APP_VERSION=$npm_package_version react-app-rewired --openssl-legacy-provider build",
         "eject": "react-app-rewired eject"
     },
     "eslintConfig": {

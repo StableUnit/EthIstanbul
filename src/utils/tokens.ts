@@ -23,4 +23,3 @@ export const fromHRToBN = (n: number, decimals: number) => {
 
 export const toHRNumber = (bn: BN, decimal = 0) => bn.div(new BN(10).pow(new BN(decimal))).toNumber();
 export const toHRNumberFloat = (bn: BN, decimal = 0) => toHRNumber(bn.muln(1000), decimal) / 1000;
-
