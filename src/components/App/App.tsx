@@ -10,6 +10,7 @@ import { StateContext } from "../../reducer/constants";
 
 import "./App.scss";
 import { Routes } from "../Routes";
+import { NetworkModal } from "../NetworkModal";
 
 const App = () => {
     const { uiSelectedChainId } = useContext(StateContext);
@@ -87,6 +88,7 @@ const App = () => {
                     <div className="connect-modal__fade" onClick={closeModal} />
                 </div>
             )}
+            <NetworkModal />
         </div>
     );
 };

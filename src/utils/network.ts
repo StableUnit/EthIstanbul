@@ -1,67 +1,94 @@
 import Web3 from "web3";
 import { Chain } from "wagmi";
 
-export type NetworkType = "eth" | "goerli" | "polygon" | "celo";
+export type NetworkType = "chiliz" | "scroll" | "polygonZK" | "neon" | "arbitrum" | "celo";
 
 export const NETWORK: Record<NetworkType, NetworkType> = {
-    eth: "eth",
-    goerli: "goerli",
-    polygon: "polygon",
+    chiliz: "chiliz",
+    scroll: "scroll",
+    polygonZK: "polygonZK",
+    neon: "neon",
+    arbitrum: "arbitrum",
     celo: "celo",
 };
 
 export const networkNames = {
-    [NETWORK.eth]: "Ethereum",
-    [NETWORK.polygon]: "Polygon",
-    [NETWORK.goerli]: "Goerli",
+    [NETWORK.chiliz]: "Chiliz Spicy Testnet",
+    [NETWORK.scroll]: "Scroll Sepolia Testnet",
+    [NETWORK.polygonZK]: "Polygon zkEVM",
+    [NETWORK.neon]: "Neon EVM DevNet",
+    [NETWORK.arbitrum]: "Arbitrum One",
     [NETWORK.celo]: "Celo",
 };
 
 const inverse = (obj: Record<any, any>) => Object.fromEntries(Object.entries(obj).map((a) => a.reverse()));
 
 export const idToNetwork: Record<number, NetworkType> = {
-    1: NETWORK.eth,
-    5: NETWORK.goerli,
-    137: NETWORK.polygon,
+    88882: NETWORK.chiliz,
+    534351: NETWORK.scroll,
+    1101: NETWORK.polygonZK,
+    245022926: NETWORK.neon,
+    42161: NETWORK.arbitrum,
     42220: NETWORK.celo,
 };
 
 export const networkToId: Record<NetworkType, number> = inverse(idToNetwork);
 
+export const DEFAULT_NETWORK_ID = networkToId[NETWORK.arbitrum];
+
 export const networkInfo = {
-    [NETWORK.eth]: {
-        chainName: "Ethereum Mainnet",
-        chainId: Web3.utils.toHex(networkToId[NETWORK.eth]),
-        blockExplorerUrls: ["https://etherscan.io"],
-        rpcUrls: ["https://eth.llamarpc.com", `https://mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_KEY}`],
+    [NETWORK.chiliz]: {
+        chainName: networkNames[NETWORK.chiliz],
+        chainId: Web3.utils.toHex(networkToId[NETWORK.chiliz]),
+        rpcUrls: ["https://spicy-rpc.chiliz.com/"],
+        blockExplorerUrls: ["https://spicy-explorer.chiliz.com/"],
+        nativeCurrency: {
+            name: "CHZ",
+            symbol: "CHZ",
+            decimals: 18,
+        },
+    },
+    [NETWORK.scroll]: {
+        chainName: networkNames[NETWORK.scroll],
+        chainId: Web3.utils.toHex(networkToId[NETWORK.scroll]),
+        rpcUrls: ["https://sepolia-rpc.scroll.io/"],
+        blockExplorerUrls: ["https://sepolia.scrollscan.com/"],
         nativeCurrency: {
             name: "ETH",
             symbol: "ETH",
             decimals: 18,
         },
     },
-    [NETWORK.goerli]: {
-        chainName: "Goerli",
-        chainId: Web3.utils.toHex(networkToId[NETWORK.goerli]),
-        blockExplorerUrls: ["https://goerli.etherscan.io"],
-        rpcUrls: [`https://goerli.infura.io/v3/${process.env.REACT_APP_INFURA_KEY}`],
+    [NETWORK.polygonZK]: {
+        chainName: networkNames[NETWORK.polygonZK],
+        chainId: Web3.utils.toHex(networkToId[NETWORK.polygonZK]),
+        rpcUrls: ["https://rpc.ankr.com/polygon_zkevm"],
+        blockExplorerUrls: ["https://zkevm.polygonscan.com"],
         nativeCurrency: {
-            name: "GoerliETH",
-            symbol: "GoerliETH",
+            name: "ETH",
+            symbol: "ETH",
             decimals: 18,
         },
     },
-    [NETWORK.polygon]: {
-        chainName: "Polygon Mainnet",
-        chainId: Web3.utils.toHex(networkToId[NETWORK.polygon]),
-        rpcUrls: [
-            "https://polygon-rpc.com/",
-            `https://polygon-mainnet.infura.io/v3/${process.env.REACT_APP_INFURA_KEY}`,
-        ],
-        blockExplorerUrls: ["https://polygonscan.com/"],
+    [NETWORK.neon]: {
+        chainName: networkNames[NETWORK.neon],
+        chainId: Web3.utils.toHex(networkToId[NETWORK.neon]),
+        rpcUrls: ["https://devnet.neonevm.org"],
+        blockExplorerUrls: ["https://devnet.neonscan.org"],
         nativeCurrency: {
-            name: "MATIC Token",
-            symbol: "MATIC Token",
+            name: "ETH",
+            symbol: "ETH",
+            decimals: 18,
+        },
+    },
+    [NETWORK.arbitrum]: {
+        chainName: "Arbitrum One",
+        chainId: Web3.utils.toHex(networkToId[NETWORK.arbitrum]),
+        rpcUrls: ["https://arb1.arbitrum.io/rpc"],
+        blockExplorerUrls: ["https://arbiscan.io"],
+        nativeCurrency: {
+            name: "ETH",
+            symbol: "ETH",
             decimals: 18,
         },
     },
@@ -93,14 +120,20 @@ const generateWagmiCustomNetwork = (network: NetworkType) => ({
 });
 
 export const wagmiCustomNetworks: Record<string, Chain> = {
+    [NETWORK.chiliz]: generateWagmiCustomNetwork(NETWORK.chiliz),
+    [NETWORK.scroll]: generateWagmiCustomNetwork(NETWORK.scroll),
+    [NETWORK.neon]: generateWagmiCustomNetwork(NETWORK.neon),
     [NETWORK.celo]: generateWagmiCustomNetwork(NETWORK.celo),
 };
 
-export const changeNetworkAtMetamask = async (networkName: NetworkType) => {
+export const changeNetworkAtMetamask = async (chainId?: number) => {
+    if (!chainId) {
+        return;
+    }
     try {
         await window.ethereum.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: Web3.utils.toHex(networkToId[networkName]) }],
+            params: [{ chainId: Web3.utils.toHex(chainId) }],
         });
     } catch (switchError) {
         // This error code indicates that the chain has not been added to MetaMask.
@@ -109,7 +142,7 @@ export const changeNetworkAtMetamask = async (networkName: NetworkType) => {
             try {
                 await window.ethereum.request({
                     method: "wallet_addEthereumChain",
-                    params: [networkInfo[networkName]],
+                    params: [networkInfo[idToNetwork[chainId] ?? ""]],
                 });
             } catch (addError) {
                 console.error(addError);

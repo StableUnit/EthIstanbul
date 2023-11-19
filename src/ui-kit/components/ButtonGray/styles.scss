@@ -1,0 +1,33 @@
+@import "../../styles/vars";
+
+.button-gray {
+  background: $gray4;
+  border-radius: 40px;
+  padding: 8px;
+  width: fit-content;
+  box-sizing: border-box;
+  user-select: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  color: white;
+  cursor: pointer;
+
+  text-decoration: none;
+  transition: all 250ms;
+
+  &:hover {
+    background: #4F4F4F;
+    text-decoration: none;
+  }
+
+  &--disabled {
+    opacity: 0.8;
+    pointer-events: none;
+  }
+}

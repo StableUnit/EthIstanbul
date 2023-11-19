@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import cn from "classnames";
 
-import { useAccount } from "wagmi";
+import { useAccount, useNetwork } from "wagmi";
 import { getShortAddress } from "../../utils/wallet";
 import { GradientHref } from "../../ui-kit/components/GradientHref";
 import { useDevice } from "../../hooks/useDimensions";
@@ -10,6 +10,9 @@ import { LinkType } from "./supportComponents/MenuModal";
 import { HeaderInfo } from "./supportComponents/HeaderInfo";
 
 import "./Header.scss";
+import { NetworkChanger } from "../../ui-kit/components/NetworkChanger";
+import { Actions } from "../../reducer";
+import { DispatchContext, StateContext } from "../../reducer/constants";
 
 interface NavbarProps {
     onConnect: () => void;
@@ -31,6 +34,22 @@ const Header = ({ onConnect, onDisconnect }: NavbarProps) => {
     const { address } = useAccount();
     const { isMobile } = useDevice();
     const location = useLocation();
+    const dispatch = useContext(DispatchContext);
+    const [oldChainId, setOldChainId] = useState<number>();
+    const { isNetworkModalVisible } = useContext(StateContext);
+    const { chain } = useNetwork();
+
+    const openNetworkModal = () => {
+        setOldChainId(chain?.id);
+        dispatch({ type: Actions.SetIsNetworkModalVisible, payload: true });
+    };
+
+    useEffect(() => {
+        if (isNetworkModalVisible && chain?.id !== oldChainId) {
+            setOldChainId(chain?.id);
+            dispatch({ type: Actions.SetIsNetworkModalVisible, payload: false });
+        }
+    }, [isNetworkModalVisible, chain, oldChainId, dispatch]);
 
     return (
         <div className="header">
@@ -57,6 +76,7 @@ const Header = ({ onConnect, onDisconnect }: NavbarProps) => {
                         })}
                     </div>
                 )}
+                {chain && <NetworkChanger onClick={openNetworkModal} />}
                 {address ? (
                     <div className="header__address" onClick={onDisconnect}>
                         <span className="header__address-text">{getShortAddress(address)}</span>

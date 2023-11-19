@@ -4,7 +4,7 @@ import { ReactNotifications } from "react-notifications-component";
 import { BrowserRouter } from "react-router-dom";
 
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet, polygon, goerli } from "wagmi/chains";
+import { arbitrum, polygonZkEvm } from "wagmi/chains";
 import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
@@ -22,7 +22,14 @@ import "react-notifications-component/dist/theme.css";
 const AppContainer = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-    const chains = [mainnet, goerli, polygon, wagmiCustomNetworks.celo];
+    const chains = [
+        arbitrum,
+        polygonZkEvm,
+        wagmiCustomNetworks.chiliz,
+        wagmiCustomNetworks.scroll,
+        wagmiCustomNetworks.neon,
+        wagmiCustomNetworks.celo,
+    ];
 
     const { provider, webSocketProvider } = configureChains(chains, [
         infuraProvider({ apiKey: process.env.REACT_APP_INFURA_KEY ?? "" }),

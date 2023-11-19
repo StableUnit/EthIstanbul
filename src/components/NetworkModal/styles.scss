@@ -1,0 +1,88 @@
+@import "src/ui-kit/styles/vars";
+
+.network-modal {
+  width: 350px;
+  height: fit-content;
+  padding: 32px 40px;
+  color: $white;
+
+  background: $gray4;
+  border-radius: 16px;
+  position: relative;
+
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -50%);
+
+  &__title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 26px;
+
+    padding-bottom: 32px;
+    text-align: center;
+  }
+
+  &__close {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
+  }
+
+  &__network {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: calc(100% - 32px);
+    background: $gray1;
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background: $dark;
+    }
+
+    &__name {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 18px;
+
+      padding-left: 12px;
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+    }
+
+    &--selected {
+      pointer-events: none;
+
+      color: $green;
+    }
+
+    &--disabled {
+      opacity: 0.5;
+      color: $gray1;
+      pointer-events: none;
+    }
+  }
+}
+
+.network-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(32, 32, 29, 0.8);
+    backdrop-filter: blur(3px);
+    z-index: 11;
+}
