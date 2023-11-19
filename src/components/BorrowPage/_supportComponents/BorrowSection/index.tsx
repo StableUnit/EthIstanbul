@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 import { FormControl, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 
@@ -9,9 +9,14 @@ import { ReactComponent as ArrowDownIcon } from "../../../../ui-kit/images/arrow
 import "./styles.scss";
 import { addSuccessNotification } from "../../../../utils/notifications";
 
+const isRatherEqual = (a: number, b: number) => {
+    return Math.abs(a - b) < 0.00001;
+};
+
 export const BorrowSection = () => {
     const liqPriceUSD = 0.009;
     const liqPriceETH = 0.0007;
+    const coinPriceInETH = 0.0002;
     const [supply, setSupply] = useState<number>();
     const [borrow, setBorrow] = useState<number>();
     const [mainBalance, setMainBalance] = useState<number>(5);
@@ -20,10 +25,48 @@ export const BorrowSection = () => {
     const coins = [
         {
             token_address: "0x00",
-            logo: undefined,
+            logo: "grok.png",
             symbol: "GROK",
         },
     ];
+
+    useEffect(() => {
+        console.log(
+            "supply",
+            borrow,
+            supply,
+            (borrow ?? 0) * coinPriceInETH,
+            isRatherEqual((borrow ?? 0) * coinPriceInETH, supply ?? 0)
+        );
+        if (!selectedToken) {
+            return;
+        }
+        if (supply !== undefined && !isRatherEqual((borrow ?? 0) * coinPriceInETH, supply)) {
+            setBorrow(supply / coinPriceInETH);
+        }
+        if (supply === undefined && borrow !== undefined) {
+            setBorrow(0);
+        }
+    }, [supply, selectedToken]);
+
+    useEffect(() => {
+        console.log(
+            "borrow",
+            borrow,
+            supply,
+            (borrow ?? 0) * coinPriceInETH,
+            isRatherEqual(borrow * coinPriceInETH, supply ?? 0)
+        );
+        if (!selectedToken) {
+            return;
+        }
+        if (borrow !== undefined && !isRatherEqual(borrow * coinPriceInETH, supply ?? 0)) {
+            setSupply(borrow * coinPriceInETH);
+        }
+        if (borrow === undefined && supply !== undefined) {
+            setSupply(0);
+        }
+    }, [borrow]);
 
     const handleSupplyChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (event.target.value === "") {
@@ -65,7 +108,7 @@ export const BorrowSection = () => {
                             }}
                         />
                         <div className="borrow-section__input-data__value">
-                            {((supply ?? 0) * 2050).toLocaleString()}$
+                            {((supply ?? 0) * 2045.2).toLocaleString()}$
                         </div>
                     </div>
                     <div className="borrow-section__input-data__token-info">
@@ -94,7 +137,7 @@ export const BorrowSection = () => {
                             }}
                         />
                         <div className="borrow-section__input-data__value">
-                            {((borrow ?? 0) * 0.3).toLocaleString()}$
+                            {((borrow ?? 0) * 0.409).toLocaleString()}$
                         </div>
                     </div>
                     <div>

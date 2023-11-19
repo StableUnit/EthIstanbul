@@ -62,8 +62,15 @@
 }
 
 .borrow-section-form {
-  &__token-form__symbol {
-    margin-left: 5px;
+  &__token-form {
+    &__logo {
+      width: 32px;
+      height: 32px;
+    }
+
+    &__symbol {
+      margin-left: 5px;
+    }
   }
 
   .MuiSelect-select {
