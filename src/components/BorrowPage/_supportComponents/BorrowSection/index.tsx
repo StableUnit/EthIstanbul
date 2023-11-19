@@ -137,7 +137,7 @@ export const BorrowSection = () => {
                             }}
                         />
                         <div className="borrow-section__input-data__value">
-                            {((borrow ?? 0) * 0.409).toLocaleString()}$
+                            {((borrow ?? 0) * 0.401).toLocaleString()}$
                         </div>
                     </div>
                     <div>
