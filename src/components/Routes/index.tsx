@@ -12,6 +12,11 @@ interface Props {
 export const Routes = ({ onConnect }: Props) => (
     <Switch>
         {/* @ts-ignore */}
+        <Route exact path="/">
+            <PoolsPage />
+        </Route>
+
+        {/* @ts-ignore */}
         <Route exact path="/borrow">
             <BorrowPage />
         </Route>
@@ -21,13 +26,8 @@ export const Routes = ({ onConnect }: Props) => (
             <PoolsPage />
         </Route>
 
-        {/* @ts-ignore */}
-        <Route exact path="/">
-            <Redirect to="/borrow" />
-        </Route>
-
-        <Route path="*">
-            <PageNotFound />
-        </Route>
+        {/* <Route path="*"> */}
+        {/*    <PageNotFound /> */}
+        {/* </Route> */}
     </Switch>
 );
