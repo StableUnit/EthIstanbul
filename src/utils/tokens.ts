@@ -1,4 +1,7 @@
 import BN from "bn.js";
+import { NETWORK, networkToId } from "./network";
+
+export const ADDRESS_ZERO = "0x0000000000000000000000000000000000000000";
 
 export const beautifyTokenBalance = (balance: string, decimals: number, fraction = 5) => {
     const exp = 10 ** fraction;
@@ -7,6 +10,17 @@ export const beautifyTokenBalance = (balance: string, decimals: number, fraction
         minimumFractionDigits: 0,
         maximumFractionDigits: fraction,
     });
+};
+
+export const getNetworkAsset = (chainId: number) => {
+    switch (chainId) {
+        case +networkToId[NETWORK.chiliz]:
+            return "CHZ";
+        case +networkToId[NETWORK.neon]:
+            return "NEON";
+        default:
+            return "ETH";
+    }
 };
 
 export const fromHRToBN = (n: number, decimals: number) => {

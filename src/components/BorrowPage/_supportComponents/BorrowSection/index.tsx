@@ -1,13 +1,17 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
+import { useAccount, useNetwork } from "wagmi";
 
 import { FormControl, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 
+import BigNumber from "bignumber.js";
 import EthImage from "../../../../ui-kit/images/eth.png";
 import Button from "../../../../ui-kit/components/Button/Button";
 import { ReactComponent as ArrowDownIcon } from "../../../../ui-kit/images/arrow-down.svg";
+import { addSuccessNotification } from "../../../../utils/notifications";
+import { CommonFactory } from "../../../../utils/api";
+import { ADDRESS_ZERO, beautifyTokenBalance, getNetworkAsset } from "../../../../utils/tokens";
 
 import "./styles.scss";
-import { addSuccessNotification } from "../../../../utils/notifications";
 
 const isRatherEqual = (a: number, b: number) => {
     return Math.abs(a - b) < 0.00001;
@@ -17,9 +21,12 @@ export const BorrowSection = () => {
     const liqPriceUSD = 0.009;
     const liqPriceETH = 0.0007;
     const coinPriceInETH = 0.0002;
+    const { address } = useAccount();
+    const { chain } = useNetwork();
     const [supply, setSupply] = useState<number>();
     const [borrow, setBorrow] = useState<number>();
-    const [mainBalance, setMainBalance] = useState<number>(5);
+    const [networkBaseSymbol, setNetworkBaseSymbol] = useState("ETH");
+    const [mainBalance, setMainBalance] = useState<BigNumber>();
     const [APR, setAPR] = useState<number>(15);
     const [selectedToken, setSelectedToken] = useState<string>(); // address
     const coins = [
@@ -31,13 +38,20 @@ export const BorrowSection = () => {
     ];
 
     useEffect(() => {
-        console.log(
-            "supply",
-            borrow,
-            supply,
-            (borrow ?? 0) * coinPriceInETH,
-            isRatherEqual((borrow ?? 0) * coinPriceInETH, supply ?? 0)
-        );
+        if (chain) {
+            setNetworkBaseSymbol(getNetworkAsset(chain.id));
+        }
+    }, [chain]);
+
+    const updateBalance = async () => {
+        // const newBalance = await CommonFactory.balance(ADDRESS_ZERO);
+        setMainBalance(BigNumber(5));
+    };
+    useEffect(() => {
+        updateBalance();
+    }, [address]);
+
+    useEffect(() => {
         if (!selectedToken) {
             return;
         }
@@ -50,13 +64,6 @@ export const BorrowSection = () => {
     }, [supply, selectedToken]);
 
     useEffect(() => {
-        console.log(
-            "borrow",
-            borrow,
-            supply,
-            (borrow ?? 0) * coinPriceInETH,
-            isRatherEqual(borrow * coinPriceInETH, supply ?? 0)
-        );
         if (!selectedToken) {
             return;
         }
@@ -113,10 +120,11 @@ export const BorrowSection = () => {
                     </div>
                     <div className="borrow-section__input-data__token-info">
                         <div className="borrow-section__input-data__main-asset">
-                            <img src={EthImage} /> ETH
+                            <img src={EthImage} /> {networkBaseSymbol}
                         </div>
                         <div className="borrow-section__input-data__value">
-                            Balance {mainBalance.toLocaleString()} ETH
+                            Balance {mainBalance ? beautifyTokenBalance(mainBalance.toString(), 18) : 0}{" "}
+                            {networkBaseSymbol}
                         </div>
                     </div>
                 </div>

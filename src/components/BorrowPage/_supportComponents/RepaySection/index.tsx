@@ -14,7 +14,7 @@ export const RepaySection = () => {
             isApproved: false,
         },
         {
-            name: "GROK 2",
+            name: "SOME",
             address: "0x01233",
             amount: 2468.5,
             isApproved: false,

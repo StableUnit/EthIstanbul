@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useProvider } from "wagmi";
 import cn from "classnames";
 
+import Web3 from "web3";
 import Header from "../Header/Header";
 import { Footer } from "../Footer/Footer";
 import { ReactComponent as MetamaskIcon } from "../../ui-kit/images/metamask-circle.svg";
@@ -11,13 +12,26 @@ import { StateContext } from "../../reducer/constants";
 import "./App.scss";
 import { Routes } from "../Routes";
 import { NetworkModal } from "../NetworkModal";
+import { setUtilsCurrentAddress, setUtilsWeb3 } from "../../utils/api";
 
 const App = () => {
     const { uiSelectedChainId } = useContext(StateContext);
     const { connectAsync, connectors, isLoading, pendingConnector } = useConnect({ chainId: uiSelectedChainId });
     const { disconnect } = useDisconnect();
-
+    const provider = useProvider();
     const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const { address } = useAccount();
+    useEffect(() => {
+        if (address) {
+            setUtilsCurrentAddress(address);
+        }
+    }, [address]);
+    useEffect(() => {
+        if (provider) {
+            setUtilsWeb3();
+        }
+    }, [provider]);
 
     const openModal = () => {
         setIsModalVisible(true);
